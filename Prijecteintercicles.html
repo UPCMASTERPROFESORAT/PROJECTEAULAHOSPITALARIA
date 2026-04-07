@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Projecte Aula Hospitalària Intel·ligent</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --verd:#2e7d32;
+      --verd-clar:#e8f5e9;
+      --verd-fosc:#1f5a23;
+      --blanc:#ffffff;
+      --gris:#f6f7f8;
+      --gris-text:#4b4b4b;
+      --fosc:#1e1e1e;
+      --ombra:0 10px 30px rgba(0,0,0,0.08);
+      --radi:20px;
+      --max:1200px;
+    }
+
+    *{
+      box-sizing:border-box;
+    }
+
+    html,body{
+      margin:0;
+      padding:0;
+      font-family:'Lora', serif;
+      background:linear-gradient(180deg,#f9fcf9 0%, #eef7ef 100%);
+      color:var(--fosc);
+      line-height:1.6;
+    }
+
+    body{
+      overflow-x:hidden;
+    }
+
+    .container{
+      width:100%;
+      max-width:var(--max);
+      margin:0 auto;
+      padding:0 20px;
+    }
+
+    .hero{
+      position:relative;
+      padding:72px 0 48px;
+      overflow:hidden;
+    }
+
+    .hero::before{
+      content:"";
+      position:absolute;
+      top:-100px;
+      right:-100px;
+      width:280px;
+      height:280px;
+      background:radial-gradient(circle, rgba(46,125,50,0.16) 0%, rgba(46,125,50,0) 70%);
+      border-radius:50%;
+    }
+
+    .hero::after{
+      content:"";
+      position:absolute;
+      bottom:-100px;
+      left:-100px;
+      width:260px;
+      height:260px;
+      background:radial-gradient(circle, rgba(46,125,50,0.12) 0%, rgba(46,125,50,0) 70%);
+      border-radius:50%;
+    }
+
+    .hero-box{
+      position:relative;
+      z-index:2;
+      background:rgba(255,255,255,0.92);
+      backdrop-filter:blur(6px);
+      border-radius:28px;
+      box-shadow:var(--ombra);
+      padding:42px 30px;
+      text-align:center;
+    }
+
+    .badge{
+      display:inline-block;
+      background:var(--verd-clar);
+      color:var(--verd-fosc);
+      padding:8px 16px;
+      border-radius:999px;
+      font-size:0.95rem;
+      font-weight:600;
+      margin-bottom:18px;
+    }
+
+    h1,h2,h3,h4,p,span,li,a{
+      font-family:'Lora', serif;
+      word-wrap:break-word;
+      overflow-wrap:break-word;
+    }
+
+    h1{
+      margin:0 0 14px;
+      font-size:clamp(2rem, 5vw, 3.6rem);
+      line-height:1.15;
+      color:var(--verd-fosc);
+    }
+
+    .subtitle{
+      max-width:900px;
+      margin:0 auto 24px;
+      font-size:1.1rem;
+      color:var(--gris-text);
+    }
+
+    .hero-actions{
+      display:flex;
+      flex-wrap:wrap;
+      justify-content:center;
+      gap:12px;
+      margin-top:22px;
+    }
+
+    .btn{
+      display:inline-block;
+      text-decoration:none;
+      padding:12px 20px;
+      border-radius:12px;
+      font-weight:600;
+      transition:all .25s ease;
+      font-size:1rem;
+    }
+
+    .btn-primary{
+      background:var(--verd);
+      color:var(--blanc);
+    }
+
+    .btn-primary:hover{
+      background:var(--verd-fosc);
+      transform:translateY(-1px);
+    }
+
+    .btn-secondary{
+      background:#edf4ed;
+      color:var(--verd-fosc);
+      border:1px solid rgba(46,125,50,0.15);
+    }
+
+    .btn-secondary:hover{
+      background:#e2efe3;
+      transform:translateY(-1px);
+    }
+
+    section{
+      padding:28px 0;
+    }
+
+    .section-title{
+      text-align:center;
+      margin-bottom:12px;
+      font-size:clamp(1.6rem, 3vw, 2.4rem);
+      color:var(--verd-fosc);
+    }
+
+    .section-intro{
+      text-align:center;
+      max-width:900px;
+      margin:0 auto 30px;
+      color:var(--gris-text);
+      font-size:1.05rem;
+    }
+
+    .grid{
+      display:grid;
+      gap:20px;
+    }
+
+    .grid-3{
+      grid-template-columns:repeat(3, 1fr);
+    }
+
+    .grid-2{
+      grid-template-columns:repeat(2, 1fr);
+    }
+
+    .card{
+      background:var(--blanc);
+      border-radius:var(--radi);
+      box-shadow:var(--ombra);
+      padding:24px;
+      height:100%;
+    }
+
+    .card h3{
+      margin-top:0;
+      margin-bottom:10px;
+      font-size:1.25rem;
+      color:var(--verd-fosc);
+    }
+
+    .card p{
+      margin:0;
+      color:var(--gris-text);
+    }
+
+    .icon{
+      width:42px;
+      height:42px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      border-radius:12px;
+      background:var(--verd-clar);
+      color:var(--verd-fosc);
+      font-size:1.2rem;
+      margin-bottom:14px;
+    }
+
+    .highlight{
+      background:linear-gradient(135deg, #2e7d32 0%, #4caf50 100%);
+      color:#fff;
+      border-radius:28px;
+      padding:34px 24px;
+      box-shadow:var(--ombra);
+    }
+
+    .highlight h2,
+    .highlight h3,
+    .highlight p,
+    .highlight li{
+      color:#fff;
+    }
+
+    .highlight ul{
+      margin:14px 0 0;
+      padding-left:20px;
+    }
+
+    .pill-row{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      justify-content:center;
+      margin-top:18px;
+    }
+
+    .pill{
+      background:#ffffff;
+      color:var(--verd-fosc);
+      padding:10px 14px;
+      border-radius:999px;
+      font-size:0.95rem;
+      box-shadow:0 4px 12px rgba(0,0,0,0.08);
+    }
+
+    .results{
+      display:grid;
+      grid-template-columns:repeat(4, 1fr);
+      gap:16px;
+      margin-top:24px;
+    }
+
+    .result-box{
+      background:#fff;
+      border-radius:18px;
+      padding:20px;
+      box-shadow:var(--ombra);
+      text-align:center;
+    }
+
+    .result-box strong{
+      display:block;
+      font-size:2rem;
+      color:var(--verd);
+      margin-bottom:6px;
+    }
+
+    .cycle-card{
+      border-top:5px solid var(--verd);
+    }
+
+    .cycle-card h3{
+      margin-bottom:6px;
+    }
+
+    .cycle-sub{
+      font-size:0.98rem;
+      color:var(--verd);
+      margin-bottom:12px;
+      font-weight:600;
+    }
+
+    .cycle-list{
+      margin:0;
+      padding-left:18px;
+      color:var(--gris-text);
+    }
+
+    .cycle-list li{
+      margin-bottom:8px;
+    }
+
+    .journey{
+      display:grid;
+      grid-template-columns:repeat(4, 1fr);
+      gap:16px;
+      margin-top:10px;
+    }
+
+    .step{
+      background:var(--blanc);
+      border-radius:18px;
+      padding:20px;
+      box-shadow:var(--ombra);
+      position:relative;
+    }
+
+    .step-number{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      width:34px;
+      height:34px;
+      border-radius:50%;
+      background:var(--verd);
+      color:#fff;
+      font-weight:700;
+      margin-bottom:12px;
+    }
+
+    .quote{
+      text-align:center;
+      background:linear-gradient(180deg,#ffffff 0%, #f3faf3 100%);
+      border-radius:24px;
+      padding:30px 24px;
+      box-shadow:var(--ombra);
+    }
+
+    .quote p{
+      margin:0;
+      font-size:1.2rem;
+      color:var(--verd-fosc);
+      font-weight:600;
+    }
+
+    footer{
+      padding:36px 20px 50px;
+      text-align:center;
+      color:#5f6b5f;
+      font-size:0.95rem;
+    }
+
+    @media (max-width: 980px){
+      .grid-3,
+      .grid-2,
+      .results,
+      .journey{
+        grid-template-columns:1fr 1fr;
+      }
+    }
+
+    @media (max-width: 640px){
+      .hero{
+        padding-top:42px;
+      }
+
+      .hero-box,
+      .card,
+      .highlight,
+      .quote,
+      .step,
+      .result-box{
+        padding:20px;
+      }
+
+      .grid-3,
+      .grid-2,
+      .results,
+      .journey{
+        grid-template-columns:1fr;
+      }
+
+      .subtitle{
+        font-size:1rem;
+      }
+
+      .btn{
+        width:100%;
+        text-align:center;
+      }
+
+      .hero-actions{
+        flex-direction:column;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="hero">
+    <div class="container">
+      <div class="hero-box">
+        <div class="badge">Projecte intermodular intercicles</div>
+        <h1>Aula Hospitalària Intel·ligent</h1>
+        <p class="subtitle">
+          Benvinguts a un projecte comú, real i transformador. Al llarg del cicle treballarem junts
+          per crear una proposta d’aula hospitalària intel·ligent, integrant tecnologia, salut,
+          construcció, comunicació visual i treball col·laboratiu.
+        </p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#projecte">Descobrir el projecte</a>
+          <a class="btn btn-secondary" href="#cicles">Veure el paper de cada cicle</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+
+    <section id="projecte">
+      <div class="container">
+        <h2 class="section-title">Un projecte compartit per aprendre com en el món professional</h2>
+        <p class="section-intro">
+          Aquest projecte uneix diferents cicles formatius en un mateix repte. Cada grup aportarà la seva
+          especialitat, però el resultat final serà únic, coherent i construït entre tots. Això ens permetrà
+          aprendre a coordinar-nos, a prendre decisions conjuntes i a desenvolupar projectes col·laboratius
+          amb una mirada real i interdisciplinària.
+        </p>
+
+        <div class="grid grid-3">
+          <div class="card">
+            <div class="icon">🤝</div>
+            <h3>Projecte comú</h3>
+            <p>
+              Tots els cicles participen en una mateixa proposta. No són activitats separades:
+              són peces d’un únic projecte global.
+            </p>
+          </div>
+
+          <div class="card">
+            <div class="icon">🧠</div>
+            <h3>Aprenentatge real</h3>
+            <p>
+              Treballareu en un context proper al món professional, resolent necessitats,
+              organitzant tasques i creant solucions aplicables.
+            </p>
+          </div>
+
+          <div class="card">
+            <div class="icon">🚀</div>
+            <h3>Creixement personal i tècnic</h3>
+            <p>
+              A més dels coneixements tècnics, desenvolupareu autonomia, comunicació,
+              responsabilitat i capacitat de treball en equip.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="container">
+        <div class="highlight">
+          <h2 style="margin-top:0;">Enunciat global del projecte</h2>
+          <p>
+            El repte consisteix a dissenyar i desenvolupar una <strong>Aula Hospitalària Intel·ligent</strong>,
+            un prototip funcional orientat a millorar la formació de futurs professionals sanitaris
+            mitjançant la simulació d’un entorn clínic real.
+          </p>
+          <p>
+            El projecte integra el disseny de l’espai, la instal·lació i selecció d’equips,
+            l’automatització i control del sistema, i la comunicació visual i multimèdia del conjunt.
+            Tot això s’haurà de fer amb criteris de qualitat, innovació, seguretat, sostenibilitat
+            i aplicabilitat real.
+          </p>
+          <div class="pill-row">
+            <span class="pill">Innovació</span>
+            <span class="pill">Salut</span>
+            <span class="pill">Tecnologia</span>
+            <span class="pill">Treball col·laboratiu</span>
+            <span class="pill">Aplicació real</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="objectius">
+      <div class="container">
+        <h2 class="section-title">Objectius del projecte</h2>
+        <p class="section-intro">
+          Aquest projecte no només vol arribar a un resultat final, sinó també fer-vos viure
+          una experiència d’aprenentatge completa i compartida.
+        </p>
+
+        <div class="grid grid-2">
+          <div class="card">
+            <div class="icon">🎯</div>
+            <h3>Objectiu principal</h3>
+            <p>
+              Desenvolupar un prototip d’aula hospitalària intel·ligent integrant tecnologies
+              de control, monitoratge, espai funcional, equipament tècnic i comunicació visual.
+            </p>
+          </div>
+
+          <div class="card">
+            <div class="icon">📚</div>
+            <h3>Què aprendrem</h3>
+            <p>
+              Aprendrem a planificar, col·laborar, justificar decisions, presentar solucions,
+              coordinar perfils diferents i treballar com en un entorn professional real.
+            </p>
+          </div>
+
+          <div class="card">
+            <div class="icon">🛠️</div>
+            <h3>Competències que posarem en joc</h3>
+            <p>
+              Disseny, construcció, automatització, electromedicina, comunicació multimèdia,
+              organització del treball, resolució de problemes i capacitat d’adaptació.
+            </p>
+          </div>
+
+          <div class="card">
+            <div class="icon">🌍</div>
+            <h3>Mirada global</h3>
+            <p>
+              Entendrem que un gran projecte necessita perfils diversos treballant amb un objectiu
+              comú, respectant rols i connectant coneixements.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="resultats">
+      <div class="container">
+        <h2 class="section-title">Quins resultats volem aconseguir?</h2>
+        <p class="section-intro">
+          Al final del projecte, haureu construït molt més que una activitat d’aula: haureu creat
+          una proposta real, integrada i amb sentit professional.
+        </p>
+
+        <div class="results">
+          <div class="result-box">
+            <strong>1</strong>
+            <span>Prototip o maqueta funcional</span>
+          </div>
+          <div class="result-box">
+            <strong>2</strong>
+            <span>Documentació tècnica del projecte</span>
+          </div>
+          <div class="result-box">
+            <strong>3</strong>
+            <span>Presentació visual i multimèdia</span>
+          </div>
+          <div class="result-box">
+            <strong>4</strong>
+            <span>Experiència real de treball col·laboratiu</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="cicles">
+      <div class="container">
+        <h2 class="section-title">Els cicles participants i la seva missió</h2>
+        <p class="section-intro">
+          Cada cicle assumirà una part essencial del projecte. Cadascun tindrà un repte propi,
+          però tots formaran part del mateix resultat final.
+        </p>
+
+        <div class="grid grid-2">
+
+          <div class="card cycle-card">
+            <h3>CFGS Disseny i Edició de Publicacions Impreses i Multimèdia</h3>
+            <div class="cycle-sub">Comunicació, identitat visual i difusió del projecte</div>
+            <p>
+              Aquest cicle crearà la identitat visual del projecte i desenvoluparà la seva narrativa
+              gràfica i multimèdia. El seu treball donarà forma a la manera com el projecte es veu,
+              s’explica i es presenta.
+            </p>
+            <ul class="cycle-list">
+              <li>Disseny de la marca i del sistema visual.</li>
+              <li>Creació de materials gràfics i multimèdia.</li>
+              <li>Elaboració del pla de difusió i comunicació.</li>
+              <li>Preparació de la presentació final del projecte.</li>
+            </ul>
+          </div>
+
+          <div class="card cycle-card">
+            <h3>CFGS Electromedicina Clínica</h3>
+            <div class="cycle-sub">Equipament mèdic, seguretat i instal·lació tècnica</div>
+            <p>
+              Aquest cicle s’encarregarà d’analitzar les necessitats d’equipament de monitoratge,
+              seleccionar els equips adequats i garantir una instal·lació segura i funcional.
+            </p>
+            <ul class="cycle-list">
+              <li>Selecció d’equips sanitaris de monitoratge.</li>
+              <li>Disseny de la instal·lació elèctrica associada.</li>
+              <li>Simulació i verificació del sistema electromèdic.</li>
+              <li>Planificació del manteniment preventiu i seguretat d’ús.</li>
+            </ul>
+          </div>
+
+          <div class="card cycle-card">
+            <h3>CFGS Organització i Control d’Obres de Construcció</h3>
+            <div class="cycle-sub">Disseny de l’espai, viabilitat i planificació constructiva</div>
+            <p>
+              Aquest cicle liderarà la planificació i la gestió constructiva del prototip,
+              assegurant que l’espai hospitalari sigui funcional, accessible i viable.
+            </p>
+            <ul class="cycle-list">
+              <li>Disseny de l’espai hospitalari i la seva distribució.</li>
+              <li>Elaboració de plànols, seccions i memòria constructiva.</li>
+              <li>Amidaments, pressupost i planificació de l’execució.</li>
+              <li>Coordinació estructural amb la resta de sistemes.</li>
+            </ul>
+          </div>
+
+          <div class="card cycle-card">
+            <h3>CFGS Automatització i Robòtica Industrial</h3>
+            <div class="cycle-sub">Control intel·ligent, programació i automatització</div>
+            <p>
+              Aquest cicle desenvoluparà el sistema automatitzat que permetrà simular el comportament
+              d’un entorn clínic real, aportant control, monitoratge i resposta del sistema.
+            </p>
+            <ul class="cycle-list">
+              <li>Definició de funcionalitats i requisits tècnics.</li>
+              <li>Disseny funcional i programació del sistema de control.</li>
+              <li>Integració de dispositius i validació del prototip.</li>
+              <li>Documentació tècnica i presentació del sistema automatitzat.</li>
+            </ul>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="container">
+        <h2 class="section-title">Com treballarem?</h2>
+        <p class="section-intro">
+          El projecte seguirà una dinàmica semblant a la d’un equip professional: cada grup
+          avançarà en la seva part, però hi haurà coordinació constant per unir-ho tot.
+        </p>
+
+        <div class="journey">
+          <div class="step">
+            <div class="step-number">1</div>
+            <h3>Entendre el repte</h3>
+            <p>Analitzarem el context, els objectius i el valor real del projecte.</p>
+          </div>
+
+          <div class="step">
+            <div class="step-number">2</div>
+            <h3>Definir la nostra aportació</h3>
+            <p>Cada cicle concretarà què farà i com contribuirà al resultat global.</p>
+          </div>
+
+          <div class="step">
+            <div class="step-number">3</div>
+            <h3>Coordinar i construir</h3>
+            <p>Treballarem en equip, compartint decisions, idees i solucions.</p>
+          </div>
+
+          <div class="step">
+            <div class="step-number">4</div>
+            <h3>Presentar i demostrar</h3>
+            <p>Mostrarem el projecte final amb criteri tècnic, visual i professional.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="container">
+        <div class="quote">
+          <p>
+            “Aquest projecte és una oportunitat per descobrir tot el que sou capaços de fer
+            quan diferents especialitats treballen amb un objectiu comú.”
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="container">
+        <h2 class="section-title">Per què aquest projecte és important?</h2>
+        <p class="section-intro">
+          Perquè us ajudarà a fer un pas més enllà de l’aula. Us situarà davant d’un repte real,
+          us obligarà a pensar, decidir, crear i col·laborar. I, sobretot, us permetrà veure que
+          el vostre perfil professional forma part d’alguna cosa més gran.
+        </p>
+
+        <div class="grid grid-3">
+          <div class="card">
+            <div class="icon">💡</div>
+            <h3>Connecta teoria i pràctica</h3>
+            <p>
+              Tot allò que apreneu al cicle pren sentit quan s’aplica a un projecte real.
+            </p>
+          </div>
+
+          <div class="card">
+            <div class="icon">🏥</div>
+            <h3>Apropa la FP a contextos reals</h3>
+            <p>
+              El projecte relaciona la formació professional amb la innovació, la salut i la tecnologia.
+            </p>
+          </div>
+
+          <div class="card">
+            <div class="icon">🌱</div>
+            <h3>Us prepara per al futur</h3>
+            <p>
+              Aprendreu a col·laborar, comunicar i assumir responsabilitats com en un entorn laboral.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    Projecte Aula Hospitalària Intel·ligent · Presentació inicial per a l’alumnat de cicles formatius de grau superior
+  </footer>
+
+</body>
+</html>
